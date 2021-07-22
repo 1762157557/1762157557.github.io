@@ -71,6 +71,46 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-css选择器权重问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/22/css%E9%80%89%E6%8B%A9%E5%99%A8%E6%9D%83%E9%87%8D%E9%97%AE%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2021-07-22T00:37:22.000Z" itemprop="datePublished">2021-07-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/07/22/css%E9%80%89%E6%8B%A9%E5%99%A8%E6%9D%83%E9%87%8D%E9%97%AE%E9%A2%98/">css选择器权重问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>选择器类型：<br>1、ID　　#id<br>2、class　　.class<br>3、标签　　p<br>4、通用　　*<br>5、属性　　[type=”text”]<br>6、伪类　　：hover<br>7、伪元素　　::first-line<br>8、子选择器、相邻选择器</p>
+<p>权重计算规则：<br>1、第一等：代表内联样式，如: style=””，权值为1000。<br>2、第二等：代表ID选择器，如：#content，权值为0100。<br>3、第三等：代表类，伪类和属性选择器，如.content，权值为0010。<br>4、第四等：代表类型选择器和伪元素选择器，如div p，权值为0001。<br>5、通配符、子选择器、相邻选择器等的。如*、&gt;、+,权值为0000。<br>6、继承的样式没有权值。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/07/22/css%E9%80%89%E6%8B%A9%E5%99%A8%E6%9D%83%E9%87%8D%E9%97%AE%E9%A2%98/" data-id="ckre751xz0000mcqghr3ucigb" data-title="css选择器权重问题" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-伪类和伪元素" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/07/22/%E4%BC%AA%E7%B1%BB%E5%92%8C%E4%BC%AA%E5%85%83%E7%B4%A0/" class="article-date">
@@ -556,6 +596,10 @@
       <ul>
         
           <li>
+            <a href="/2021/07/22/css%E9%80%89%E6%8B%A9%E5%99%A8%E6%9D%83%E9%87%8D%E9%97%AE%E9%A2%98/">css选择器权重问题</a>
+          </li>
+        
+          <li>
             <a href="/2021/07/22/%E4%BC%AA%E7%B1%BB%E5%92%8C%E4%BC%AA%E5%85%83%E7%B4%A0/">伪类和伪元素</a>
           </li>
         
@@ -569,10 +613,6 @@
         
           <li>
             <a href="/2021/07/18/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/">进程和线程</a>
-          </li>
-        
-          <li>
-            <a href="/2021/07/17/https%E5%8A%A0%E5%AF%86/">https加密</a>
           </li>
         
       </ul>
