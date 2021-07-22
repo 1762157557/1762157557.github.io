@@ -6,15 +6,15 @@
   
   <title>css选择器权重问题 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="选择器类型：1、ID　　#id2、class　　.class3、标签　　p4、通用　　*5、属性　　[type&#x3D;”text”]6、伪类　　：hover7、伪元素　　::first-line8、子选择器、相邻选择器 权重计算规则：1、第一等：代表内联样式，如: style&#x3D;””，权值为1000。2、第二等：代表ID选择器，如：#content，权值为0100。3、第三等：代表类，伪类和属性选择器，如">
+  <meta name="description" content="选择器类型：  ID　　#id class　　.class 标签　　p 通用　　* 属性　　[type&#x3D;”text”] 伪类　　：hover 伪元素　　::first-line 子选择器、相邻选择器  权重计算规则：  第一等：代表内联样式，如: style&#x3D;””，权值为1000。 第二等：代表ID选择器，如：#content，权值为0100。 第三等：代表类，伪类和属性选择器，如.content">
 <meta property="og:type" content="article">
 <meta property="og:title" content="css选择器权重问题">
 <meta property="og:url" content="http://example.com/2021/07/22/css%E9%80%89%E6%8B%A9%E5%99%A8%E6%9D%83%E9%87%8D%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="选择器类型：1、ID　　#id2、class　　.class3、标签　　p4、通用　　*5、属性　　[type&#x3D;”text”]6、伪类　　：hover7、伪元素　　::first-line8、子选择器、相邻选择器 权重计算规则：1、第一等：代表内联样式，如: style&#x3D;””，权值为1000。2、第二等：代表ID选择器，如：#content，权值为0100。3、第三等：代表类，伪类和属性选择器，如">
+<meta property="og:description" content="选择器类型：  ID　　#id class　　.class 标签　　p 通用　　* 属性　　[type&#x3D;”text”] 伪类　　：hover 伪元素　　::first-line 子选择器、相邻选择器  权重计算规则：  第一等：代表内联样式，如: style&#x3D;””，权值为1000。 第二等：代表ID选择器，如：#content，权值为0100。 第三等：代表类，伪类和属性选择器，如.content">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-07-22T00:37:22.000Z">
-<meta property="article:modified_time" content="2021-07-22T00:43:59.683Z">
+<meta property="article:modified_time" content="2021-07-22T00:51:06.489Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -95,8 +95,26 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>选择器类型：<br>1、ID　　#id<br>2、class　　.class<br>3、标签　　p<br>4、通用　　*<br>5、属性　　[type=”text”]<br>6、伪类　　：hover<br>7、伪元素　　::first-line<br>8、子选择器、相邻选择器</p>
-<p>权重计算规则：<br>1、第一等：代表内联样式，如: style=””，权值为1000。<br>2、第二等：代表ID选择器，如：#content，权值为0100。<br>3、第三等：代表类，伪类和属性选择器，如.content，权值为0010。<br>4、第四等：代表类型选择器和伪元素选择器，如div p，权值为0001。<br>5、通配符、子选择器、相邻选择器等的。如*、&gt;、+,权值为0000。<br>6、继承的样式没有权值。</p>
+        <p>选择器类型：</p>
+<ol>
+<li>ID　　#id</li>
+<li>class　　.class</li>
+<li>标签　　p</li>
+<li>通用　　*</li>
+<li>属性　　[type=”text”]</li>
+<li>伪类　　：hover</li>
+<li>伪元素　　::first-line</li>
+<li>子选择器、相邻选择器</li>
+</ol>
+<p>权重计算规则：</p>
+<ol>
+<li>第一等：代表内联样式，如: style=””，权值为1000。</li>
+<li>第二等：代表ID选择器，如：#content，权值为0100。</li>
+<li>第三等：代表类，伪类和属性选择器，如.content，权值为0010。</li>
+<li>第四等：代表类型选择器和伪元素选择器，如div p，权值为0001。</li>
+<li>通配符、子选择器、相邻选择器等的。如*、&gt;、+,权值为0000。</li>
+<li>继承的样式没有权值。</li>
+</ol>
 
       
     </div>
