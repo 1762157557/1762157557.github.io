@@ -71,6 +71,120 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-git操作" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/12/git%E6%93%8D%E4%BD%9C/" class="article-date">
+  <time class="dt-published" datetime="2021-07-12T12:35:49.000Z" itemprop="datePublished">2021-07-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/07/12/git%E6%93%8D%E4%BD%9C/">git操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="git-reset-和-git-revert"><a href="#git-reset-和-git-revert" class="headerlink" title="git reset 和 git revert"></a>git reset 和 git revert</h2><p>reset –head  ‘commitid’是指将commit直接回退到某个版本 ，此时只是更新了本地代码，远程并未更新，所以此时想要push代码是不会成功的，只能强推，所以要三思而后行，被回退的提交是不会保存记录的，因此也不利于我们去回溯我们的问题。</p>
+<p>revert ‘commitid’ 是指放弃指定的提交并重做一次新的提交来达到这个操作，并且不会清楚被回退的那次提交，如此时提交为a-b-c，我们想要回退b和c，可以revert c，revert b 此时提交记录变成 a-b-c-c’-b’，注意只能以反向的顺序去revert，如果说此时只想撤销b的修改，也可以直接revert b 此时c的修改是会保存的。</p>
+<h2 id="git-rebase-和-git-merge"><a href="#git-rebase-和-git-merge" class="headerlink" title="git rebase 和 git merge"></a>git rebase 和 git merge</h2><p>a merge b 会把a,b的分支末端和它们的共同祖先做一个三方合并，生成一个新的快照<br>a rebase b 会把a的操作到b上重放一次，同时a的基线会变到b</p>
+<p>git rebase -i  head~3指对当前三次的提交信息做修改，可进行如下操作</p>
+<p>pick：保留该commit（缩写:p）<br>reword：保留该commit，但我需要修改该commit的注释（缩写:r）<br>edit：保留该commit, 但我要停下来修改该提交(不仅仅修改注释)（缩写:e）<br>squash：将该commit和前一个commit合并（缩写:s）<br>fixup：将该commit和前一个commit合并，但我不要保留该提交的注释信息（缩写:f）<br>exec：执行shell命令（缩写:x）<br>drop：我要丢弃该commit（缩写:d）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/07/12/git%E6%93%8D%E4%BD%9C/" data-id="ckr0mrp5l0000iuqg4hv15278" data-title="git操作" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-前端性能优化的一些途径" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/10/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E9%80%94%E5%BE%84/" class="article-date">
+  <time class="dt-published" datetime="2021-07-10T08:43:40.000Z" itemprop="datePublished">2021-07-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/07/10/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E9%80%94%E5%BE%84/">前端性能优化的一些途径</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="一、使用-http-2"><a href="#一、使用-http-2" class="headerlink" title="一、使用 http 2"></a>一、使用 http 2</h1><p>http2.0相比http1.1有了一些新的改进，服务器解析1.1请求时，由于1.1是使用文本来记录的，所以必须依次读取字节，知道遇到分隔符。对于2.0而言解析请求就会快很多，因为2.0是基于帧的协议，每个帧都有表示帧的长度字段。</p>
+<h2 id="首部压缩"><a href="#首部压缩" class="headerlink" title="首部压缩"></a>首部压缩</h2><p>http2提供了首部压缩功能，对于一般的请求而言，请求头部字段很多时候是重复的，这个时候把相同的首部字段存储起来，如建立首部键值对的表的方式，再往后的请求中，只发送他们之间不同的部分，这样就可以减少流量，加快请求时间</p>
+<h3 id="多路复用"><a href="#多路复用" class="headerlink" title="多路复用"></a>多路复用</h3><p>1.0如果要同时发送多个请求，就得建立多个tcp连接，因为一个tcp连接只能处理一个请求。</p>
+<p>在http2，多个请求可以共用同一个tcp连接，这就叫做多路复用。同一个请求用一个流来表示，并有唯一的流id来标识。多个请求和响应在tcp连接中可以乱序发送，到达目的地后再通过流id重新组件。这样一来一方面是提高了并发，另一方面也节约了大量的建立连接的时间。</p>
+<h3 id="服务器推送"><a href="#服务器推送" class="headerlink" title="服务器推送"></a>服务器推送</h3><p>服务器可以对一个客户端请求发出多个响应。也就是说，服务器除了对最初的请求进行响应，还可以向用户额外的推送资源，如当用户请求一个网站的时候，除了返回网站html页面，还可以根据和html中的资源url，提前推送这些资源。</p>
+<h3 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h3><p>http2可以对比较紧急的请求设置一个较高的优先级，服务器在收到这样的请求后，可以优先处理。</p>
+<h1 id="二、CDN"><a href="#二、CDN" class="headerlink" title="二、CDN"></a>二、CDN</h1><p>cdn（内容分发网络）是一组分布在多个不同地理位置的 Web 服务器。我们都知道，当服务器离用户越远时，延迟越高。CDN 就是为了解决这一问题，在多个位置部署服务器，让用户离服务器更近，从而缩短请求时间。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>未使用cdn时用户访问网站：</p>
+<ol>
+<li>浏览器要将域名解析为 IP 地址，所以需要向本地 DNS 发出请求。</li>
+<li>本地 DNS 依次向根服务器、顶级域名服务器、权限服务器发出请求，得到网站服务器的 IP 地址。</li>
+<li>本地 DNS 将 IP 地址发回给浏览器，浏览器向网站服务器 IP 地址发出请求并得到资源。</li>
+</ol>
+<p>使用cdn之后：</p>
+<ol>
+<li>浏览器要将域名解析为 IP 地址，所以需要向本地 DNS 发出请求。</li>
+<li>本地 DNS 依次向根服务器、顶级域名服务器、权限服务器发出请求，得到全局负载均衡系统（GSLB）的 IP 地址。</li>
+<li>本地 DNS 再向 GSLB 发出请求，GSLB 的主要功能是根据本地 DNS 的 IP 地址判断用户的位置，筛选出距离用户较近的本地负载均衡系统（SLB），并将该 SLB 的 IP 地址作为结果返回给本地 DNS。</li>
+<li>本地 DNS 将 SLB 的 IP 地址发回给浏览器，浏览器向 SLB 发出请求。</li>
+<li>SLB 根据浏览器请求的资源和地址，选出最优的缓存服务器发回给浏览器。</li>
+<li>浏览器再根据 SLB 发回的地址重定向到缓存服务器。</li>
+<li>如果缓存服务器有浏览器需要的资源，就将资源发回给浏览器。如果没有，就向源服务器请求资源，再发给浏览器并缓存在本地。</li>
+</ol>
+<h1 id="三、将css文件放在文件头部，-js文件放在底部"><a href="#三、将css文件放在文件头部，-js文件放在底部" class="headerlink" title="三、将css文件放在文件头部， js文件放在底部"></a>三、将css文件放在文件头部， js文件放在底部</h1><p>所有放在 head 标签里的 CSS 和 JS 文件都会堵塞渲染（CSS 不会阻塞 DOM 解析）。如果这些 CSS 和 JS 需要加载和解析很久的话，那么页面就空白了。所以 JS 文件要放在底部，等 HTML 解析完了再加载 JS 文件。<br>那为什么 CSS 文件还要放在头部呢？<br>因为先加载 HTML 再加载 CSS，会让用户第一时间看到的页面是没有样式的、“丑陋”的，为了避免这种情况发生，就要将 CSS 文件放在头部了。<br>另外，JS 文件也不是不可以放在头部，只要给 script 标签加上 defer 属性就可以了，异步下载，延迟执行。</p>
+<h3 id="script-标签加上-defer和async的异同："><a href="#script-标签加上-defer和async的异同：" class="headerlink" title="script 标签加上 defer和async的异同："></a>script 标签加上 defer和async的异同：</h3><ol>
+<li>async，当浏览器遇到 script 标签时，文档的解析不会停止，其他线程将下载脚本，脚本下载完成后开始执行脚本，脚本执行的过程中文档将停止解析，直到脚本执行完毕。脚本执行并不保证先后顺序执行</li>
+<li>defer，文档的解析不会停止，其他线程将下载脚本，待到文档解析完成，脚本才会执行。脚本按照它们出现的先后顺序执行。</li>
+</ol>
+<h1 id="四、使用字体图标-iconfont-代替图片图标"><a href="#四、使用字体图标-iconfont-代替图片图标" class="headerlink" title="四、使用字体图标 iconfont 代替图片图标"></a>四、使用字体图标 iconfont 代替图片图标</h1><p>字体图标就是将图标制作成一个字体，使用时就跟字体一样，可以设置属性，例如 font-size、color 等等，非常方便。并且字体图标是矢量图，不会失真。还有一个优点是生成的文件特别小。</p>
+<h1 id="五、善用缓存，不重复加载相同的资源"><a href="#五、善用缓存，不重复加载相同的资源" class="headerlink" title="五、善用缓存，不重复加载相同的资源"></a>五、善用缓存，不重复加载相同的资源</h1><p>为了避免用户每次访问网站都得请求文件，我们可以通过添加 Expires 或 max-age 来控制这一行为。Expires 设置了一个时间，只要在这个时间之前，浏览器都不会请求文件，而是直接使用缓存。而 max-age 是一个相对时间，建议使用 max-age 代替 Expires 。<br>不过这样会产生一个问题，当文件更新了怎么办？怎么通知浏览器重新请求文件？<br>可以通过更新页面中引用的资源链接地址，让浏览器主动放弃缓存，加载新资源。<br>具体做法是把资源地址 URL 的修改与文件内容关联起来，也就是说，只有文件内容变化，才会导致相应 URL 的变更，从而实现文件级别的精确缓存控制。什么东西与文件内容相关呢？我们会很自然的联想到利用数据摘要要算法对文件求摘要信息，摘要信息与文件内容一一对应，就有了一种可以精确到单个文件粒度的缓存控制依据了。</p>
+<h1 id="六、压缩文件"><a href="#六、压缩文件" class="headerlink" title="六、压缩文件"></a>六、压缩文件</h1><p>压缩文件可以减少文件下载时间，让用户体验性更好。<br>得益于 webpack 和 node 的发展，现在压缩文件已经非常方便了。<br>在 webpack 可以使用如下插件进行压缩：</p>
+<p>JavaScript：UglifyPlugin<br>CSS ：MiniCssExtractPlugin<br>HTML：HtmlWebpackPlugin</p>
+<p>其实，我们还可以做得更好。那就是使用 gzip 压缩。可以通过向 HTTP 请求头中的 Accept-Encoding 头添加 gzip 标识来开启这一功能。当然，服务器也得支持这一功能。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/07/10/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E9%80%94%E5%BE%84/" data-id="ckr0mrp5r0002iuqg40722x2g" data-title="前端性能优化的一些途径" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-第一篇博客" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/07/10/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="article-date">
@@ -197,6 +311,14 @@
       <ul>
         
           <li>
+            <a href="/2021/07/27/cache-control/">cache-control</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/24/esmodule%E6%A0%87%E5%87%86/">esmodule标准</a>
+          </li>
+        
+          <li>
             <a href="/2021/07/22/new-Object-create/">new,{},Object.create</a>
           </li>
         
@@ -206,14 +328,6 @@
         
           <li>
             <a href="/2021/07/22/css%E9%80%89%E6%8B%A9%E5%99%A8%E6%9D%83%E9%87%8D%E9%97%AE%E9%A2%98/">css选择器权重问题</a>
-          </li>
-        
-          <li>
-            <a href="/2021/07/22/%E4%BC%AA%E7%B1%BB%E5%92%8C%E4%BC%AA%E5%85%83%E7%B4%A0/">伪类和伪元素</a>
-          </li>
-        
-          <li>
-            <a href="/2021/07/21/tcp%E6%B2%BE%E5%8C%85%E9%97%AE%E9%A2%98/">tcp沾包问题</a>
           </li>
         
       </ul>
