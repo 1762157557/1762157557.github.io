@@ -71,6 +71,56 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-如何中断promise链式调用以及中断promise" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/28/%E5%A6%82%E4%BD%95%E4%B8%AD%E6%96%ADpromise%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8%E4%BB%A5%E5%8F%8A%E4%B8%AD%E6%96%ADpromise/" class="article-date">
+  <time class="dt-published" datetime="2021-07-28T08:05:12.000Z" itemprop="datePublished">2021-07-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/07/28/%E5%A6%82%E4%BD%95%E4%B8%AD%E6%96%ADpromise%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8%E4%BB%A5%E5%8F%8A%E4%B8%AD%E6%96%ADpromise/">如何中断promise链式调用以及中断promise</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="中断链式调用"><a href="#中断链式调用" class="headerlink" title="中断链式调用"></a>中断链式调用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var a = Promise.resolve()</span><br><span class="line">a.then((v)=&gt;console.log(v))</span><br><span class="line">.then((v)=&gt;console.log(v))</span><br><span class="line">.then((v)=&gt;console.log(v))</span><br><span class="line">.then((v)=&gt;console.log(v))</span><br><span class="line"></span><br><span class="line">//输出</span><br><span class="line">undefined</span><br><span class="line">undefined</span><br><span class="line">undefined</span><br><span class="line">undefined</span><br></pre></td></tr></table></figure>
+
+<p>如果想要中断后面的链式调用，在想要中断的地方返回一个永远 pending 的 promise 即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return new Promise((resolve, reject) =&gt; &#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var a = Promise.resolve()</span><br><span class="line">a.then((v)=&gt;console.log(v))</span><br><span class="line">.then((v)=&gt;&#123;</span><br><span class="line">    console.log(v)</span><br><span class="line">    return new Promise((resolve, reject) =&gt; &#123;&#125;)</span><br><span class="line">&#125;)</span><br><span class="line">.then((v)=&gt;console.log(v))</span><br><span class="line">.then((v)=&gt;console.log(v))</span><br><span class="line"></span><br><span class="line">//输出</span><br><span class="line">undefined</span><br><span class="line">undefined</span><br></pre></td></tr></table></figure>
+
+<h2 id="中断Promise"><a href="#中断Promise" class="headerlink" title="中断Promise"></a>中断Promise</h2><p>有时候我们会遇到这样的场景，当一个网络请求在限定时间内未返回时便不再等待这个请求，如以下代码所示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function timeoutWrapper(p, timeout = 2000) &#123;</span><br><span class="line">  const wait = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">      reject(&#x27;请求超时&#x27;)</span><br><span class="line">    &#125;, timeout)</span><br><span class="line">  &#125;)</span><br><span class="line">  return Promise.race([p, wait])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const request = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">  setTimeout(() =&gt; &#123;</span><br><span class="line">    resolve(&#x27;收到服务端数据&#x27;)</span><br><span class="line">  &#125;, Math.random() * 3000)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const req = timeoutWrapper(request)</span><br><span class="line">req.then(res =&gt; console.log(res)).catch(e =&gt; console.log(e))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>我们可以将上面这种情况封装成一个函数，使之更具通用性<br>因为终止 promise 的原因可能有很多，例如当用户点击某个按钮或者出现其他事件时手动终止。所以应该写一个包装函数，提供 跳出 方法，让使用者自己决定何时终止：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function broken(p1)&#123;</span><br><span class="line">    let bk </span><br><span class="line">    let p2 = new Promise((resolve,reject)=&gt;&#123;</span><br><span class="line">        bk = reject</span><br><span class="line">    &#125;)</span><br><span class="line">    let p = Promise.race([p1,p2])</span><br><span class="line">    p.bk = bk</span><br><span class="line">    return p</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const req = abortWrapper(request)</span><br><span class="line">req.then(res =&gt; console.log(res)).catch(e =&gt; console.log(e))</span><br><span class="line">setTimeout(() =&gt; req.bk(&#x27;用户手动终止请求&#x27;), 2000) // 这里可以是用户主动点击</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/07/28/%E5%A6%82%E4%BD%95%E4%B8%AD%E6%96%ADpromise%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8%E4%BB%A5%E5%8F%8A%E4%B8%AD%E6%96%ADpromise/" data-id="ckrn8u5uz0000qgqg1n8pfrez" data-title="如何中断promise链式调用以及中断promise" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Proxy" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/07/28/Proxy/" class="article-date">
@@ -520,79 +570,6 @@
 
 
   
-    <article id="post-进程和线程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/07/18/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/" class="article-date">
-  <time class="dt-published" datetime="2021-07-18T02:10:25.000Z" itemprop="datePublished">2021-07-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/07/18/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/">进程和线程</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="进程和线程的区别"><a href="#进程和线程的区别" class="headerlink" title="进程和线程的区别"></a>进程和线程的区别</h2><ol>
-<li><p>进程（Process） 是计算机中正在运行的程序，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。</p>
-</li>
-<li><p>线程（thread） 是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。</p>
-</li>
-</ol>
-<ol>
-<li>进程通信<br> 消息队列，发送消息到队列，从队列取消息，有最大长度的限制<br> 管道， 把信息传送到管道，阻塞等待管道中的信息取出<br> 信号量，用来实现互斥和同步<br> socket</li>
-</ol>
-<h2 id="浏览器进程"><a href="#浏览器进程" class="headerlink" title="浏览器进程"></a>浏览器进程</h2><p>浏览器：</p>
-<ol>
-<li><p>主进程：<br>负责浏览器界面显示，与用户交互。如前进，后退等负责各个页面的管理，创建和销毁其他进程将Renderer进程得到的内存中的Bitmap，绘制到用户界面上网络资源的管理，下载等</p>
-</li>
-<li><p>第三方插件进程：每种类型的插件对应一个进程，仅当使用该插件时才创建</p>
-</li>
-<li><p>GPU进程：最多一个，用于3D绘制等</p>
-</li>
-<li><p>浏览器渲染进程（浏览器内核）（Renderer进程，内部是多线程的）：<br>默认每个Tab页面一个进程，互不影响。主要作用为页面渲染，脚本执行，事件处理等</p>
-</li>
-</ol>
-<h3 id="浏览器内核（渲染进程）"><a href="#浏览器内核（渲染进程）" class="headerlink" title="浏览器内核（渲染进程）"></a>浏览器内核（渲染进程）</h3><ol>
-<li>GUI渲染线程<br>负责渲染浏览器界面，解析HTML，CSS，构建DOM树和RenderObject树，布局和绘制等。当界面需要重绘（Repaint）或由于某种操作引发回流(reflow)时，该线程就会执行<br>注意，GUI渲染线程与JS引擎线程是互斥的，当JS引擎执行时GUI线程会被挂起（相当于被冻结了），GUI更新会被保存在一个队列中等到JS引擎空闲时立即被执行。</li>
-</ol>
-<ol start="2">
-<li>JS引擎线程<br>也称为JS内核，负责处理Javascript脚本程序。（例如V8引擎）<br>JS引擎线程负责解析Javascript脚本，运行代码。<br>JS引擎一直等待着任务队列中任务的到来，然后加以处理，一个Tab页（renderer进程）中无论什么时候都只有一个JS线程在运行JS程序同样注意，GUI渲染线程与JS引擎线程是互斥的，所以如果JS执行的时间过长，这样就会造成页面的渲染不连贯，导致页面渲染加载阻塞。</li>
-</ol>
-<ol start="3">
-<li>事件触发线程<br>归属于浏览器而不是JS引擎，用来控制事件循环（可以理解，JS引擎自己都忙不过来，需要浏览器另开线程协助）当JS引擎执行代码块如setTimeOut时（也可来自浏览器内核的其他线程,如鼠标点击、AJAX异步请求等），会将对应任务添加到事件线程中当对应的事件符合触发条件被触发时，该线程会把事件添加到待处理队列的队尾，等待JS引擎的处理<br>注意，由于JS的单线程关系，所以这些待处理队列中的事件都得排队等待JS引擎处理（当JS引擎空闲时才会去执行）</li>
-</ol>
-<ol start="4">
-<li>定时触发器线程<br>传说中的setInterval与setTimeout所在线程<br>浏览器定时计数器并不是由JavaScript引擎计数的,（因为JavaScript引擎是单线程的, 如果处于阻塞线程状态就会影响记计时的准确）因此通过单独线程来计时并触发定时（计时完毕后，添加到事件队列中，等待JS引擎空闲后执行）注意，W3C在HTML标准中规定，规定要求setTimeout中低于4ms的时间间隔算为4ms。</li>
-</ol>
-<ol start="5">
-<li>异步http请求线程:<br>在XMLHttpRequest在连接后是通过浏览器新开一个线程请求将检测到状态变更时，如果设置有回调函数，异步线程就产生状态变更事件，将这个回调再放入事件队列中。再由JavaScript引擎执行。</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/18/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/" data-id="ckr8qzrl20000d8qgdbh36tsu" data-title="进程和线程" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -629,6 +606,10 @@
       <ul>
         
           <li>
+            <a href="/2021/07/28/%E5%A6%82%E4%BD%95%E4%B8%AD%E6%96%ADpromise%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8%E4%BB%A5%E5%8F%8A%E4%B8%AD%E6%96%ADpromise/">如何中断promise链式调用以及中断promise</a>
+          </li>
+        
+          <li>
             <a href="/2021/07/28/Proxy/">Proxy</a>
           </li>
         
@@ -642,10 +623,6 @@
         
           <li>
             <a href="/2021/07/22/new-Object-create/">new,{},Object.create</a>
-          </li>
-        
-          <li>
-            <a href="/2021/07/22/bfc%E7%89%B9%E6%80%A7/">bfc特性</a>
           </li>
         
       </ul>
