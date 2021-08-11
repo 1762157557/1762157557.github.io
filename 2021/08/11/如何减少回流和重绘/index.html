@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>cache-control | Hexo</title>
+  <title>如何减少回流和重绘 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Cache-Control在HTTP&#x2F;1.1中，Cache-Control是最重要的规则，主要用于控制网页缓存，主要取值为： public：所有内容都将被缓存（客户端和代理服务器都可缓存） private：所有内容只有客户端可以缓存，Cache-Control的默认取值 no-cache：客户端缓存内容，但是是否使用缓存则需要经过协商缓存来验证决定 no-store：所有内容都不会被缓存，即不使用">
+  <meta name="description" content="css 把动画效果放到开启绝对定位和固定定位的元素上，这种元素脱离文档流，不会引发父元素及其后续元素回流 避免设置多层的内联样式  js 避免频繁操作样式 避免频繁操作dom，可以建立一个documentFragment，在这上面进行dom操作，再将其添加到文档中">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cache-control">
-<meta property="og:url" content="http://example.com/2021/07/27/cache-control/index.html">
+<meta property="og:title" content="如何减少回流和重绘">
+<meta property="og:url" content="http://example.com/2021/08/11/%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Cache-Control在HTTP&#x2F;1.1中，Cache-Control是最重要的规则，主要用于控制网页缓存，主要取值为： public：所有内容都将被缓存（客户端和代理服务器都可缓存） private：所有内容只有客户端可以缓存，Cache-Control的默认取值 no-cache：客户端缓存内容，但是是否使用缓存则需要经过协商缓存来验证决定 no-store：所有内容都不会被缓存，即不使用">
+<meta property="og:description" content="css 把动画效果放到开启绝对定位和固定定位的元素上，这种元素脱离文档流，不会引发父元素及其后续元素回流 避免设置多层的内联样式  js 避免频繁操作样式 避免频繁操作dom，可以建立一个documentFragment，在这上面进行dom操作，再将其添加到文档中">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-07-27T00:53:29.000Z">
-<meta property="article:modified_time" content="2021-07-27T00:54:05.129Z">
+<meta property="article:published_time" content="2021-08-11T12:30:30.000Z">
+<meta property="article:modified_time" content="2021-08-11T12:36:07.664Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -73,10 +73,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-cache-control" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-如何减少回流和重绘" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2021/07/27/cache-control/" class="article-date">
-  <time class="dt-published" datetime="2021-07-27T00:53:29.000Z" itemprop="datePublished">2021-07-27</time>
+    <a href="/2021/08/11/%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98/" class="article-date">
+  <time class="dt-published" datetime="2021-08-11T12:30:30.000Z" itemprop="datePublished">2021-08-11</time>
 </a>
     
   </div>
@@ -87,7 +87,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      cache-control
+      如何减少回流和重绘
     </h1>
   
 
@@ -95,17 +95,19 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>Cache-Control<br>在HTTP/1.1中，Cache-Control是最重要的规则，主要用于控制网页缓存，主要取值为：</p>
-<p>public：所有内容都将被缓存（客户端和代理服务器都可缓存）</p>
-<p>private：所有内容只有客户端可以缓存，Cache-Control的默认取值</p>
-<p>no-cache：客户端缓存内容，但是是否使用缓存则需要经过协商缓存来验证决定</p>
-<p>no-store：所有内容都不会被缓存，即不使用强制缓存，也不使用协商缓存</p>
-<p>max-age=xxx (xxx is numeric)：缓存内容将在xxx秒后失效</p>
+        <h2 id="css"><a href="#css" class="headerlink" title="css"></a>css</h2><ul>
+<li>把动画效果放到开启绝对定位和固定定位的元素上，这种元素脱离文档流，不会引发父元素及其后续元素回流</li>
+<li>避免设置多层的内联样式</li>
+</ul>
+<h2 id="js"><a href="#js" class="headerlink" title="js"></a>js</h2><ul>
+<li>避免频繁操作样式</li>
+<li>避免频繁操作dom，可以建立一个documentFragment，在这上面进行dom操作，再将其添加到文档中</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/27/cache-control/" data-id="ckrlcjdqz0001k1qg1gmyd1vq" data-title="cache-control" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/08/11/%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98/" data-id="cks7h806x0000vxly7z146cxr" data-title="如何减少回流和重绘" class="article-share-link">Share</a>
       
       
       
@@ -115,19 +117,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/07/28/Proxy/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Proxy
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/07/24/esmodule%E6%A0%87%E5%87%86/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/08/02/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%A8%A1%E5%BC%8F%E5%92%8C%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">esmodule标准</div>
+      <div class="article-nav-title">构造函数模式和工厂模式</div>
     </a>
   
 </nav>

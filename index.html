@@ -71,6 +71,92 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-如何减少回流和重绘" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/08/11/%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98/" class="article-date">
+  <time class="dt-published" datetime="2021-08-11T12:30:30.000Z" itemprop="datePublished">2021-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/08/11/%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98/">如何减少回流和重绘</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="css"><a href="#css" class="headerlink" title="css"></a>css</h2><ul>
+<li>把动画效果放到开启绝对定位和固定定位的元素上，这种元素脱离文档流，不会引发父元素及其后续元素回流</li>
+<li>避免设置多层的内联样式</li>
+</ul>
+<h2 id="js"><a href="#js" class="headerlink" title="js"></a>js</h2><ul>
+<li>避免频繁操作样式</li>
+<li>避免频繁操作dom，可以建立一个documentFragment，在这上面进行dom操作，再将其添加到文档中</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/08/11/%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98/" data-id="cks7h806x0000vxly7z146cxr" data-title="如何减少回流和重绘" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-构造函数模式和工厂模式" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/08/02/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%A8%A1%E5%BC%8F%E5%92%8C%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="article-date">
+  <time class="dt-published" datetime="2021-08-02T02:54:27.000Z" itemprop="datePublished">2021-08-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/08/02/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%A8%A1%E5%BC%8F%E5%92%8C%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">构造函数模式和工厂模式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const creat = (name,age,sex)=&gt;&#123;</span><br><span class="line">    const obj = &#123;&#125;</span><br><span class="line">    obj.name = name;</span><br><span class="line">    obj.age = age;</span><br><span class="line">    obj.content = content;</span><br><span class="line">    return obj;</span><br><span class="line">&#125;</span><br><span class="line">var factorySon = creat(&#x27;二狗子&#x27;,&#x27;22&#x27;,&#x27;身娇体柔易&#x27;);</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="构造函数模式"><a href="#构造函数模式" class="headerlink" title="构造函数模式"></a>构造函数模式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function Factory(name,age,content) &#123;</span><br><span class="line">    this.name = name;</span><br><span class="line">    this.age = age;</span><br><span class="line">    this.content = content;</span><br><span class="line">&#125;</span><br><span class="line">var factorySonTwo = new Factory(&#x27;瑞瑞&#x27;,&#x27;22&#x27;,&#x27;古灵精怪&#x27;);</span><br><span class="line">//构造函数要使用new调用</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/08/02/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%A8%A1%E5%BC%8F%E5%92%8C%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" data-id="ckru1krjc0000vjly82r7f6bi" data-title="构造函数模式和工厂模式" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-如何中断promise链式调用以及中断promise" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/07/28/%E5%A6%82%E4%BD%95%E4%B8%AD%E6%96%ADpromise%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8%E4%BB%A5%E5%8F%8A%E4%B8%AD%E6%96%ADpromise/" class="article-date">
@@ -475,101 +561,6 @@
 
 
   
-    <article id="post-tcp沾包问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/07/21/tcp%E6%B2%BE%E5%8C%85%E9%97%AE%E9%A2%98/" class="article-date">
-  <time class="dt-published" datetime="2021-07-21T00:21:50.000Z" itemprop="datePublished">2021-07-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/07/21/tcp%E6%B2%BE%E5%8C%85%E9%97%AE%E9%A2%98/">tcp沾包问题</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><p>tcp协议存在发送缓冲区和接收缓冲区，发送和接收时字节流都会先进入缓冲区，待合适的时机才会进行发送或者取出。</p>
-<h2 id="实际场景"><a href="#实际场景" class="headerlink" title="实际场景"></a>实际场景</h2><ol>
-<li>由于一个包的长度大于了发送缓冲区大小，那么下一次从缓冲区发出的数据中就只会包含这个包的一部分数据，这种情况为拆包。</li>
-<li>包的长度太小，导致两个包在缓冲区中同时发出，这种情况称为沾包。</li>
-<li>接收方未及时从缓冲区取出数据，也会发生沾包。</li>
-<li>发送数据大于MSS（最大报文长度），此时会截取超出长度的部分，发生拆包。</li>
-</ol>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ol>
-<li>使用带消息头的协议，头部加上消息开始标识以及长度信息。</li>
-<li>设置定长消息，每次按照固定长度读取。</li>
-<li>设置消息边界，如每次结束加入’\n’。</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/21/tcp%E6%B2%BE%E5%8C%85%E9%97%AE%E9%A2%98/" data-id="ckrcr2ck90000upqg0odqhdpt" data-title="tcp沾包问题" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-为什么只能在最外层使用hook？" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/07/18/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AA%E8%83%BD%E5%9C%A8%E6%9C%80%E5%A4%96%E5%B1%82%E4%BD%BF%E7%94%A8hook%EF%BC%9F/" class="article-date">
-  <time class="dt-published" datetime="2021-07-18T06:50:51.000Z" itemprop="datePublished">2021-07-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/07/18/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AA%E8%83%BD%E5%9C%A8%E6%9C%80%E5%A4%96%E5%B1%82%E4%BD%BF%E7%94%A8hook%EF%BC%9F/">为什么只能在最外层使用hook？</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="hook使用规则"><a href="#hook使用规则" class="headerlink" title="hook使用规则"></a>hook使用规则</h2><ol>
-<li><p>只在最顶层使用 Hook</p>
-</li>
-<li><p>只在 React 函数中调用 Hook<br>在 React 的函数组件中调用 Hook<br>✅ 在自定义 Hook 中调用其他 Hook 。</p>
-</li>
-</ol>
-<h2 id="为什么只能在最顶层使用呢？"><a href="#为什么只能在最顶层使用呢？" class="headerlink" title="为什么只能在最顶层使用呢？"></a>为什么只能在最顶层使用呢？</h2><p>因为使用hook时，我们可以同时使用多个同样的hook，比如多个useState，那这个时候react又如何得知哪一个state对应useState呢，答案是react会根据hook自身的调用顺序来判断，如果每次渲染前后hook执行顺序没有发生改变，那就可以一一对应。<br>这个时候如果把hook放在一个if语句中去执行，当下一次渲染时这个if语句不执行的时候，其中的hook也不会执行，那也就是说hook执行顺序在渲染前后不一致了，此时就会导致bug产生。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/18/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AA%E8%83%BD%E5%9C%A8%E6%9C%80%E5%A4%96%E5%B1%82%E4%BD%BF%E7%94%A8hook%EF%BC%9F/" data-id="ckr8ul7wb0000mzqg4gykepni" data-title="为什么只能在最外层使用hook？" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -593,7 +584,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li></ul>
     </div>
   </div>
 
@@ -606,6 +597,14 @@
       <ul>
         
           <li>
+            <a href="/2021/08/11/%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98/">如何减少回流和重绘</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/02/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%A8%A1%E5%BC%8F%E5%92%8C%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">构造函数模式和工厂模式</a>
+          </li>
+        
+          <li>
             <a href="/2021/07/28/%E5%A6%82%E4%BD%95%E4%B8%AD%E6%96%ADpromise%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8%E4%BB%A5%E5%8F%8A%E4%B8%AD%E6%96%ADpromise/">如何中断promise链式调用以及中断promise</a>
           </li>
         
@@ -615,14 +614,6 @@
         
           <li>
             <a href="/2021/07/27/cache-control/">cache-control</a>
-          </li>
-        
-          <li>
-            <a href="/2021/07/24/esmodule%E6%A0%87%E5%87%86/">esmodule标准</a>
-          </li>
-        
-          <li>
-            <a href="/2021/07/22/new-Object-create/">new,{},Object.create</a>
           </li>
         
       </ul>
